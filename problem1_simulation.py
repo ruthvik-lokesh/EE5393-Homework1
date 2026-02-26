@@ -1,26 +1,19 @@
 """
 EE 5393 - Homework #1, Question 1
 Stochastic Simulation of Chemical Reaction Networks (Gillespie Algorithm)
-
 Reactions:
     R1: 2X1 + X2 --> 4X3    k1 = 1
     R2: X1 + 2X3 --> 3X2    k2 = 2
     R3: X2 + X3  --> 2X1    k3 = 3
-
 Part (a): From [110, 26, 55], estimate Pr(C1), Pr(C2), Pr(C3)
 Part (b): From [9, 8, 7], compute mean and variance after 7 steps
-
 AI Disclosure: Simulation code generated with AI assistance.
 """
-
 import numpy as np
 import random
-
-
 # ──────────────────────────────────────────────
 #  Propensity Function (Discrete Model)
 # ──────────────────────────────────────────────
-
 def propensities(x1, x2, x3):
     """
     Discrete propensities:
@@ -33,7 +26,6 @@ def propensities(x1, x2, x3):
     a2 = x1 * x3 * (x3 - 1) if x3 >= 2 else 0.0
     a3 = 3.0 * x2 * x3
     return a1, a2, a3
-
 
 def gillespie_step(state):
     """Performs one discrete Gillespie reaction step."""
@@ -52,12 +44,9 @@ def gillespie_step(state):
         return [x1 - 1, x2 + 3, x3 - 2], 2
     else:
         return [x1 + 2, x2 - 1, x3 - 1], 3
-
-
 # ──────────────────────────────────────────────
 #  Part (a): Estimate Outcome Probabilities
 # ──────────────────────────────────────────────
-
 def part_a(n_runs=50_000, seed=42):
     random.seed(seed)
 
@@ -94,8 +83,6 @@ def part_a(n_runs=50_000, seed=42):
     print(f"Pr(C3: x3 > 100)  = {counts['C3']/n_runs:.6f}")
 
     return {k: counts[k]/n_runs for k in counts}
-
-
 # ──────────────────────────────────────────────
 #  Part (b): Mean and Variance after 7 Steps
 # ──────────────────────────────────────────────
@@ -128,12 +115,9 @@ def part_b(n_runs=100_000, n_steps=7, seed=42):
         print(f"{name}: Mean = {mean:.6f}, Variance = {var:.6f}")
 
     return results
-
-
 # ──────────────────────────────────────────────
 #  Main Execution
 # ──────────────────────────────────────────────
-
 if __name__ == "__main__":
     part_a()
     part_b()
